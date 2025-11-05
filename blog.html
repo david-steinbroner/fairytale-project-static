@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Fairytale Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Modal Overlay - MATCHES PARTICIPANT MODAL */
+        .blog-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .blog-modal.active {
+            display: flex !important;
+        }
+
+        /* Modal Content Container - MATCHES PARTICIPANT MODAL */
+        .blog-wrapper {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid #000;
+            border-radius: 4px;
+            width: 89%;
+            max-width: 1030px;
+            min-height: 605px;
+            position: relative;
+            display: flex;
+        }
+
+        /* Close Button - MATCHES PARTICIPANT MODAL */
+        .close-blog {
+            color: white;
+            background-color: #000;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            right: -15px;
+            top: -15px;
+            font-size: 22px;
+            font-weight: 400;
+            cursor: pointer;
+            z-index: 10001;
+            line-height: 0;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            padding: 0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .close-blog:hover,
+        .close-blog:focus {
+            background-color: #f5f5f5;
+        }
+
+        /* Blog Header */
+        .blog-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ccc;
+            background: white;
+        }
+
+        .blog-header h2 {
+            font-size: 18px;
+        }
+
+        .blog-header a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .blog-header a:hover {
+            text-decoration: none;
+        }
+
+        /* Sidebar */
+        .blog-sidebar {
+            width: 200px;
+            padding: 70px 20px 20px 20px;
+            border-left: 1px solid #ddd;
+            border-right: none;
+            background: #f9f9f9;
+            order: 2;
+        }
+
+        .blog-sidebar h4 {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .blog-sidebar ul {
+            list-style: none;
+        }
+
+        .blog-sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .blog-sidebar a {
+            color: #000;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .blog-sidebar a:hover {
+            color: red;
+            text-decoration: underline;
+        }
+
+        .blog-sidebar a.active {
+            font-weight: bold;
+        }
+
+        /* Main Content Area */
+        .blog-content {
+            flex: 1;
+            padding: 70px 30px 30px 30px;
+            overflow-y: auto;
+            max-height: calc(100vh - 80px);
+            order: 1;
+        }
+
+        /* Post Styles */
+        .post {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .post:last-child {
+            border-bottom: none;
+        }
+
+        .post h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .post h3 a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .post h3 a:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        .post h4 {
+            color: #000;
+            font-size: 13px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .postcontent,
+        .postcontentsnippet {
+            margin-top: 0px;
+            margin-bottom: 5px;
+            line-height: 1.2;
+            text-align: justify; 
+        }
+
+        /* Remove extra space at top of snippet only */
+        .postcontentsnippet > *:first-child {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        /* Pull snippet closer to date */
+        .post h4 + .postcontentsnippet {
+            margin-top: -3px;
+        }
+
+        .postcontent a,
+        .postcontentsnippet a {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .postcontent a:hover,
+        .postcontentsnippet a:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        .postcontent img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+
+        .readmore {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .readmore:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        .readmore a:hover {
+            font-weight: red;
+        }
+
+        .postfooter {
+            color:#000;
+            font-size: 12px;
+        }
+
+        .postfooter em {
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        .postfooter a {
+            color:#000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .postfooter a:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-link a {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-link:hover,
+        .back-link a:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .blog-wrapper {
+                flex-direction: column;
+                margin: 20px;
+            }
+
+            .blog-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding: 70px 20px 20px 20px;
+            }
+
+            .blog-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Blog Modal -->
+    <div id="blogModal" class="blog-modal">
+        <div class="blog-wrapper">
+            <span class="close-blog" onclick="closeBlog()">&times;</span>
+            
+            <!-- Header -->
+            <div class="blog-header">
+                <h2><a href="#" onclick="showAllPosts(); return false;">博客 / Blog / Blog</a></h2>
+            </div>
+
+            <!-- Sidebar with Tags -->
+            <div class="blog-sidebar">
+                <h4>Tags</h4>
+                <ul id="tagList">
+                    <!-- Tags will be populated by JavaScript -->
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="blog-content" id="blogContent">
+                <div class="loading">Loading blog posts...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let blogPosts = [];
+        let currentView = 'all'; // 'all', 'single', 'tag'
+        let currentFilter = null;
+
+        // Open blog modal
+        function openBlog() {
+            document.getElementById('blogModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close blog modal
+        function closeBlog() {
+            document.getElementById('blogModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Load blog data
+        async function loadBlogData() {
+            try {
+                const response = await fetch('blog-data.json');
+                blogPosts = await response.json();
+                
+                // Generate tag list
+                generateTagList();
+                
+                // Show all posts by default
+                showAllPosts();
+            } catch (error) {
+                document.getElementById('blogContent').innerHTML = 
+                    '<p class="loading">Error loading blog posts.</p>';
+                console.error('Error loading blog data:', error);
+            }
+        }
+
+        // Generate tag list in sidebar
+        function generateTagList() {
+            const allTags = new Set();
+            blogPosts.forEach(post => {
+                post.tags.forEach(tag => allTags.add(tag));
+            });
+
+            const tagList = document.getElementById('tagList');
+            const sortedTags = Array.from(allTags).sort();
+            
+            let html = '<li><a href="#" onclick="showAllPosts(); return false;" class="active">all posts</a></li>';
+            
+            sortedTags.forEach(tag => {
+                html += `<li><a href="#" onclick="filterByTag('${tag}'); return false;">${tag}</a></li>`;
+            });
+            
+            tagList.innerHTML = html;
+        }
+
+        // Show all posts
+        function showAllPosts() {
+            currentView = 'all';
+            currentFilter = null;
+            
+            let html = '';
+            blogPosts.forEach(post => {
+                html += renderPostSnippet(post);
+            });
+            
+            document.getElementById('blogContent').innerHTML = html;
+            updateActiveTag(null);
+        }
+
+        // Filter posts by tag
+        function filterByTag(tag) {
+            currentView = 'tag';
+            currentFilter = tag;
+            
+            const filteredPosts = blogPosts.filter(post => post.tags.includes(tag));
+            
+            let html = '<p class="back-link"><a href="#" onclick="showAllPosts(); return false;">← Back to Blog</a></p><br/>';
+            
+            if (filteredPosts.length === 0) {
+                html += '<p>No posts found with this tag.</p>';
+            } else {
+                filteredPosts.forEach(post => {
+                    html += renderPostSnippet(post);
+                });
+            }
+            
+            html += '<br/><p class="back-link"><a href="#" onclick="showAllPosts(); return false;">← Back to Blog</a></p>';
+            
+            document.getElementById('blogContent').innerHTML = html;
+            updateActiveTag(tag);
+        }
+
+        // Show single post
+        function showSinglePost(postId) {
+            currentView = 'single';
+            
+            const post = blogPosts.find(p => p.id === postId);
+            if (!post) return;
+            
+            let html = '<p class="back-link"><a href="#" onclick="showAllPosts(); return false;">← Back to Blog</a></p><br/>';
+            html += renderFullPost(post);
+            html += '<br/><p class="back-link"><a href="#" onclick="showAllPosts(); return false;">← Back to Blog</a></p>';
+            
+            document.getElementById('blogContent').innerHTML = html;
+        }
+
+        // Render post snippet
+        function renderPostSnippet(post) {
+            let html = '<div class="post">';
+            html += `<h3><a href="#" onclick="showSinglePost(${post.id}); return false;">${post.title}</a></h3>`;
+            html += `<h4>${post.date_formatted}</h4>`;
+            html += '<div class="postcontentsnippet">';
+            html += post.snippet;
+            html += ` <a href="#" onclick="showSinglePost(${post.id}); return false;" class="readmore">(Read More...)</a>`;
+            html += '</div>';
+            html += renderPostTags(post);
+            html += '</div>';
+            return html;
+        }
+
+        // Render full post
+        function renderFullPost(post) {
+            let html = '<div class="post">';
+            html += `<h3>${post.title}</h3>`;
+            html += `<h4>${post.date_formatted}</h4>`;
+            html += '<div class="postcontent">';
+            html += post.post;
+            html += '</div>';
+            html += renderPostTags(post);
+            html += '</div>';
+            return html;
+        }
+
+        // Render post tags
+        function renderPostTags(post) {
+            if (post.tags.length === 0) return '';
+            
+            let html = '<span class="postfooter"><em>Tags: &nbsp;</em>';
+            post.tags.forEach((tag, index) => {
+                if (index > 0) html += ' &nbsp; &nbsp;';
+                html += `<a href="#" onclick="filterByTag('${tag}'); return false;">${tag}</a>`;
+            });
+            html += '</span>';
+            return html;
+        }
+
+        // Update active tag in sidebar
+        function updateActiveTag(tag) {
+            const links = document.querySelectorAll('.blog-sidebar a');
+            links.forEach(link => {
+                link.classList.remove('active');
+                const linkText = link.textContent.trim();
+                if ((tag === null && linkText === 'all posts') || linkText === tag) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Load blog data on page load
+        loadBlogData();
+
+        // Close modal when clicking outside
+        document.getElementById('blogModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBlog();
+            }
+        });
+        
+// Close blog modal
+function closeBlog() {
+    document.getElementById('blogModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+    
+    // Tell parent window to hide iframe
+    if (window.parent !== window) {
+        window.parent.postMessage('closeBlog', '*');
+    }
+}
+
+
+    </script>
+</body>
+</html>

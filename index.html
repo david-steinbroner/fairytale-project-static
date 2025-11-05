@@ -987,7 +987,7 @@
 
                 <div class="header_links">
                     <a href="project-overview.html" target="_blank" rel="noopener noreferrer">项目简介 / Project Overview / Projekt-Überblick</a>
-                    <a href="#">博客 / Blog / Blog</a>
+                    <a href="#" onclick="openBlog(); return false;">博客 / Blog / Blog</a>
                     <a href="#">参与者召唤 / Call to Participants / An die Teilnehmenden</a>
                     <div id="social">
                         <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net"
@@ -1975,6 +1975,31 @@
                 }
             });
         </script>
-</body>
+        
+        <!-- Blog Modal (iframe) -->
+        <iframe id="blogIframe" src="blog.html" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; border:none; z-index:10000;"></iframe>
 
+        <script>
+            // Open blog modal
+            function openBlog() {
+                const iframe = document.getElementById('blogIframe');
+                iframe.style.display = 'block';
+                // Wait for iframe to load, then trigger its openBlog function
+                iframe.onload = function() {
+                    iframe.contentWindow.openBlog();
+                };
+                // If already loaded, call directly
+                if (iframe.contentWindow.openBlog) {
+                    iframe.contentWindow.openBlog();
+                }
+            }
+
+            // Listen for close message from blog iframe
+            window.addEventListener('message', function(e) {
+                if (e.data === 'closeBlog') {
+                    document.getElementById('blogIframe').style.display = 'none';
+                }
+            });
+        </script>
+    </body>
 </html>
