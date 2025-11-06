@@ -2007,7 +2007,7 @@
                 // If using iframe method
                 const iframe = document.createElement('iframe');
                 iframe.id = 'callModalIframe';
-                iframe.src = 'call-to-participants.html';
+                iframe.src = 'modals/call-to-participants.html?v=' + Date.now();
                 iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:9999;';
                 document.body.appendChild(iframe);
 
@@ -2024,7 +2024,7 @@
                 // Create iframe for overview modal
                 const iframe = document.createElement('iframe');
                 iframe.id = 'overviewModalIframe';
-                iframe.src = 'project-overview.html?v=' + Date.now();
+                iframe.src = 'modals/project-overview.html?v=' + Date.now();
                 iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:9999;';
                 document.body.appendChild(iframe);
 

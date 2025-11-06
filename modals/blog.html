@@ -353,7 +353,7 @@
         // Load blog data
         async function loadBlogData() {
             try {
-                const response = await fetch('blog-data.json');
+                const response = await fetch('../data/blog-data.json');
                 blogPosts = await response.json();
                 
                 // Generate tag list
