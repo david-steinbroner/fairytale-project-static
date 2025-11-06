@@ -1448,30 +1448,11 @@
                 // Initialize with Chinese language
                 updateModalLanguage('chinese', participant);
 
-                // Load and display content
-                const content = getParticipantContent(participant.id);
-                const contentArea = document.querySelector('.modal-content-area');
-                const placeholder = contentArea.querySelector('.modal-placeholder');
-
-                if (content) {
-                    // Get Chinese bio by default
-                    const chineseBio = content.chinese.bio;
-
-                    if (chineseBio && chineseBio.trim() !== '') {
-                        // Has content - display it
-                        placeholder.style.display = 'none';
-                        const formattedBio = chineseBio.replace(/<br\s*\/?>/gi, '<br>');
-contentArea.innerHTML = '<h2 id="modalContentTitle" class="modal-content-title">简介</h2><div style="white-space: pre-wrap;">' + formattedBio + '</div>';
-                    } else {
-                        // No content in any language
-                        placeholder.style.display = 'block';
-                        placeholder.textContent = 'Content not yet available. Biographies and interview materials are currently being migrated.';
-                    }
-                } else {
-                    // No content object at all
-                    placeholder.style.display = 'block';
-                    placeholder.textContent = 'Content not yet available. Biographies and interview materials are currently being migrated.';
+                // Initialize content display with Chinese biography by default
+                if (window.setCurrentModalParticipant) {
+                    window.setCurrentModalParticipant(participant);
                 }
+                updateContentDisplay('chinese', 'biography', participant);
 
                 // Show modal
                 modal.style.display = 'block';
@@ -1641,6 +1622,51 @@ contentArea.innerHTML = '<h2 id="modalContentTitle" class="modal-content-title">
 
             }
 
+                function updateContentDisplay(lang, contentType, participant) {
+                    const contentArea = document.querySelector('.modal-content-area');
+                    if (!contentArea) return;
+
+                    // Get participant content
+                    const content = getParticipantContent(participant.id);
+                    if (!content) {
+                        contentArea.innerHTML = '<p class="modal-placeholder">Content not yet available. Biographies and interview materials are currently being migrated.</p>';
+                        return;
+                    }
+
+                    // Map language values to content object keys
+                    const langMap = { 'chinese': 'chinese', 'english': 'english', 'german': 'german' };
+                    const langKey = langMap[lang];
+
+                    // Map content type to content object keys
+                    const contentMap = { 'biography': 'bio', 'application': 'application', 'interview': 'interview', 'followup': 'followup' };
+                    const contentKey = contentMap[contentType];
+
+                    // Get the content for selected language and type
+                    const selectedContent = content[langKey]?.[contentKey] || '';
+
+                    // Check if content exists in Chinese (fallback language)
+                    const chineseContent = content.chinese?.[contentKey] || '';
+
+                    // Translation messages
+                    const translationMessages = {
+                        chinese: '如果您愿意帮助我们翻译这些文档，请联系我们。',
+                        english: `This ${contentType} is not yet translated. If you would like to help translate this or other documents, please contact us.`,
+                        german: 'Wenn Sie uns helfen wollen, dieses oder andere Dokumente zu übersetzen, nehmen Sie gern Kontakt mit uns auf.'
+                    };
+
+                    if (selectedContent && selectedContent.trim() !== '') {
+                        // Content exists in selected language - display it
+                        const formattedContent = selectedContent.replace(/<br\s*\/?>/gi, '<br>');
+                        contentArea.innerHTML = '<div style="white-space: pre-wrap;">' + formattedContent + '</div>';
+                    } else if (chineseContent && chineseContent.trim() !== '') {
+                        // Content exists in Chinese but not in selected language - show translation message
+                        contentArea.innerHTML = '<p class="modal-placeholder">' + translationMessages[lang] + '</p>';
+                    } else {
+                        // No content in any language
+                        contentArea.innerHTML = '<p class="modal-placeholder">Content not yet available. Biographies and interview materials are currently being migrated.</p>';
+                    }
+                }
+
             function setupModalDropdowns() {
                 const languageSelect = document.getElementById('modalLanguage');
                 const contentSelect = document.getElementById('modalContent');
@@ -1675,82 +1701,39 @@ contentArea.innerHTML = '<h2 id="modalContentTitle" class="modal-content-title">
                     }
                 };
 
-function updateContent() {
-    const lang = languageSelect.value;
-    const content = contentSelect.value;
+                function updateContent() {
+                    const lang = languageSelect.value;
+                    const content = contentSelect.value;
 
-    // Update the title based on selected language and content type
-    if (contentTitle && contentTitles[content]) {
-        contentTitle.textContent = contentTitles[content][lang];
-    }
+                    // Update the title based on selected language and content type
+                    if (contentTitle && contentTitles[content]) {
+                        contentTitle.textContent = contentTitles[content][lang];
+                    }
 
-    // Show/hide metadata based on content type
-    if (metadata) {
-        if (content === 'biography') {
-            metadata.style.display = 'block';
-        } else {
-            metadata.style.display = 'none';
-        }
-    }
+                    // Show/hide metadata based on content type
+                    if (metadata) {
+                        if (content === 'biography') {
+                            metadata.style.display = 'block';
+                        } else {
+                            metadata.style.display = 'none';
+                        }
+                    }
 
-    // Update language for metadata if we have a participant
-    if (currentParticipant) {
-        updateModalLanguage(lang, currentParticipant);
-        
-        // Update content display based on language selection
-        updateContentDisplay(lang, content, currentParticipant);
-    }
+                    // Update language for metadata if we have a participant
+                    if (currentParticipant) {
+                        updateModalLanguage(lang, currentParticipant);
 
-    // Hide photo overlay when changing content
-    if (photoOverlay) {
-        photoOverlay.style.display = 'none';
-    }
-}
+                        // Update content display based on language selection
+                        updateContentDisplay(lang, content, currentParticipant);
+                    }
 
-function updateContentDisplay(lang, contentType, participant) {
-    const contentArea = document.querySelector('.modal-content-area');
-    if (!contentArea) return;
-    
-    // Get participant content
-    const content = getParticipantContent(participant.id);
-    if (!content) {
-        contentArea.innerHTML = '<p class="modal-placeholder">Content not yet available. Biographies and interview materials are currently being migrated.</p>';
-        return;
-    }
-    
-    // Map language values to content object keys
-    const langMap = { 'chinese': 'chinese', 'english': 'english', 'german': 'german' };
-    const langKey = langMap[lang];
-    
-    // Map content type to content object keys
-    const contentMap = { 'biography': 'bio', 'application': 'application', 'interview': 'interview', 'followup': 'followup' };
-    const contentKey = contentMap[contentType];
-    
-    // Get the content for selected language and type
-    const selectedContent = content[langKey]?.[contentKey] || '';
-    
-    // Check if content exists in Chinese (fallback language)
-    const chineseContent = content.chinese?.[contentKey] || '';
-    
-    // Translation messages
-    const translationMessages = {
-        chinese: '如果您愿意帮助我们翻译这些文档，请联系我们。',
-        english: `This ${contentType} is not yet translated. If you would like to help translate this or other documents, please contact us.`,
-        german: 'Wenn Sie uns helfen wollen, dieses oder andere Dokumente zu übersetzen, nehmen Sie gern Kontakt mit uns auf.'
-    };
-    
-    if (selectedContent && selectedContent.trim() !== '') {
-        // Content exists in selected language - display it
-        const formattedContent = selectedContent.replace(/<br\s*\/?>/gi, '<br>');
-        contentArea.innerHTML = '<div style="white-space: pre-wrap;">' + formattedContent + '</div>';
-    } else if (chineseContent && chineseContent.trim() !== '') {
-        // Content exists in Chinese but not in selected language - show translation message
-        contentArea.innerHTML = '<p class="modal-placeholder">' + translationMessages[lang] + '</p>';
-    } else {
-        // No content in any language
-        contentArea.innerHTML = '<p class="modal-placeholder">Content not yet available. Biographies and interview materials are currently being migrated.</p>';
-    }
-}
+                    // Hide photo overlay when changing content
+                    if (photoOverlay) {
+                        photoOverlay.style.display = 'none';
+                    }
+                }
+
+
 
                 languageSelect.addEventListener('change', updateContent);
                 contentSelect.addEventListener('change', updateContent);
