@@ -1448,6 +1448,31 @@
                 // Initialize with Chinese language
                 updateModalLanguage('chinese', participant);
 
+                // Load and display content
+                const content = getParticipantContent(participant.id);
+                const contentArea = document.querySelector('.modal-content-area');
+                const placeholder = contentArea.querySelector('.modal-placeholder');
+
+                if (content) {
+                    // Get Chinese bio by default
+                    const chineseBio = content.chinese.bio;
+
+                    if (chineseBio && chineseBio.trim() !== '') {
+                        // Has content - display it
+                        placeholder.style.display = 'none';
+                        const formattedBio = chineseBio.replace(/<br\s*\/?>/gi, '<br>');
+contentArea.innerHTML = '<h2 id="modalContentTitle" class="modal-content-title">简介</h2><div style="white-space: pre-wrap;">' + formattedBio + '</div>';
+                    } else {
+                        // No content in any language
+                        placeholder.style.display = 'block';
+                        placeholder.textContent = 'Content not yet available. Biographies and interview materials are currently being migrated.';
+                    }
+                } else {
+                    // No content object at all
+                    placeholder.style.display = 'block';
+                    placeholder.textContent = 'Content not yet available. Biographies and interview materials are currently being migrated.';
+                }
+
                 // Show modal
                 modal.style.display = 'block';
             }
