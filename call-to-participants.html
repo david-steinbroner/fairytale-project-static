@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call to Participants - Fairytale Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #000;
+        }
+
+        /* Modal Overlay */
+        .call-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .call-modal.active {
+            display: flex !important;
+        }
+
+        /* Modal Container */
+        .call-modal-wrapper {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid #000;
+            border-radius: 4px;
+            width: 89%;
+            max-width: 1030px;
+            min-height: 400px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Close Button */
+        .close-call-modal {
+            color: white;
+            background-color: #000;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            right: -15px;
+            top: -15px;
+            font-size: 22px;
+            font-weight: 400;
+            cursor: pointer;
+            z-index: 10001;
+            line-height: 0;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            padding: 0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .close-call-modal:hover,
+        .close-call-modal:focus {
+            background-color: #333;
+        }
+
+        /* Header */
+        .call-modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #ccc;
+            background: white;
+        }
+
+        .call-modal-header h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Content Area */
+        .call-modal-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        /* Three Column Layout */
+        .content-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .column {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .column p {
+            margin-bottom: 15px;
+        }
+
+        .column strong {
+            font-weight: bold;
+        }
+
+        /* Email Links */
+        a {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        .email-highlight {
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .content-columns {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .call-modal-wrapper {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+
+            .call-modal-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .call-modal-header h2 {
+                font-size: 16px;
+            }
+
+            .column {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Call to Participants Modal -->
+    <div id="callModal" class="call-modal">
+        <div class="call-modal-wrapper">
+            <span class="close-call-modal" onclick="closeCallModal()">&times;</span>
+
+            <!-- Header -->
+            <div class="call-modal-header">
+                <h2>参与者召唤 / Call to Participants / An die Teilnehmenden</h2>
+            </div>
+
+            <!-- Main Content -->
+            <div class="call-modal-content">
+                <div class="content-columns">
+                    <!-- Chinese Column -->
+                    <div class="column">
+                        <p>我们正在尝试，以恢复与艾未未2007年《童话》项目参与者的联系。当年，该项目在全国各地招募了1001名年龄不一、背景各异的中国公民。如今，</p>
+
+                        <p>我们希望重访各位参与者，以志《童话》推出五周年。如果您曾参与该项目，或认识任何与之相关的人士，请现联或我们。</p>
+
+                        <p class="email-highlight">电邮: <a
+                                href="mailto:info@fairytaleproject.net">info@fairytaleproject.net</a></p>
+                    </div>
+
+                    <!-- English Column -->
+                    <div class="column">
+                        <p>We are trying to re-establish contact with participants in Ai Weiwei's 2007 project
+                            Fairytale. The project involved 1001 Chinese citizens of diverse ages and backgrounds from
+                            different regions of mainland China.</p>
+
+                        <p>If you were part of this project, or know someone who was, please contact us. We would like
+                            to re-interview participants on the occasion of its fifth anniversary.</p>
+
+                        <p>We welcome individuals interested in working with us to realize the project. We are looking
+                            for individuals interested in leading workshops about the project in schools, cultural
+                            organizations, cafes, and other civic spaces. Whether you are a beginner Mandarin speaker,
+                            taking German evening language classes, a professional translator, a bilingual/trilingual
+                            speaker, or simply interested in cultural dialogue, we need your help. <strong><a href="fairytaleproject_educationkit_2013.pdf" target="_blank">Click here to download our workshop kit.</a></strong>
+
+                        <p class="email-highlight">Email: <a
+                                href="mailto:info@fairytaleproject.net">info@fairytaleproject.net</a></p>
+                    </div>
+
+                    <!-- German Column -->
+                    <div class="column">
+                        <p>Wir versuchen, den Kontakt mit Teilnehmern des 2007 Fairytale-Projekts von Ai Weiwei wieder
+                            herzustellen. An diesem Projekt haben 1001 chinesische Bürger verschiedenen Alters und
+                            verschiedener kultureller Herkunft aus diversen Regionen Chinas teilgenommen.</p>
+
+                        <p>Wenn Sie Teil dieses Projekts waren, oder jemanden kennen, der daran teilgenommen hat, nehmen
+                            Sie bitte mit uns Kontakt auf. Wir möchten die Teilnehmenden zum 5. Jahrestag des Projekts
+                            noch einmal interviewen.</p>
+
+                        <p class="email-highlight">E-Mail: <a
+                                href="mailto:info@fairytaleproject.net">info@fairytaleproject.net</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Open modal
+        function openCallModal() {
+            document.getElementById('callModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+// Close modal
+function closeCallModal() {
+    // If in iframe, send message to parent
+    if (window.parent !== window) {
+        window.parent.postMessage('closeCallModal', '*');
+    } else {
+        // If standalone, just hide modal
+        document.getElementById('callModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+        // Close when clicking outside
+        document.getElementById('callModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeCallModal();
+            }
+        });
+
+        // Close on ESC key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeCallModal();
+            }
+        });
+
+        // If opened from parent window via postMessage
+        window.addEventListener('message', function (event) {
+            if (event.data === 'openCallModal') {
+                openCallModal();
+            }
+        });
+
+// Auto-open modal when loaded in iframe
+window.addEventListener('load', function() {
+    if (window.parent !== window) {
+        openCallModal();
+    }
+});
+
+    </script>
+</body>
+
+</html>

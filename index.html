@@ -986,9 +986,10 @@
                 </div>
 
                 <div class="header_links">
-                    <a href="project-overview.html" target="_blank" rel="noopener noreferrer">项目简介 / Project Overview / Projekt-Überblick</a>
+                    <a href="#" onclick="openOverviewModal(); return false;">项目简介 / Project Overview / Projekt-Überblick</a>
                     <a href="#" onclick="openBlog(); return false;">博客 / Blog / Blog</a>
-                    <a href="#">参与者召唤 / Call to Participants / An die Teilnehmenden</a>
+                    <a href="#" onclick="openCallModal(); return false;">参与者召唤 / Call to Participants / An die
+                        Teilnehmenden</a>
                     <div id="social">
                         <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net"
                             target="_blank" class="facebook">Facebook</a>
@@ -1113,7 +1114,7 @@
             // ==========================================
             // ZOOM FUNCTIONALITY
             // ==========================================
-            const ZOOM_LEVELS = [36, 29, 24, 20, 16, 13, 10, 8];
+            const ZOOM_LEVELS = [36, 29, 24, 20, 16, 13, 10, 8, 7];
             const DEFAULT_ZOOM = 5; // Index for 13 per row (100%)
             let currentZoom = DEFAULT_ZOOM;
 
@@ -1975,9 +1976,10 @@
                 }
             });
         </script>
-        
+
         <!-- Blog Modal (iframe) -->
-        <iframe id="blogIframe" src="blog.html" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; border:none; z-index:10000;"></iframe>
+        <iframe id="blogIframe" src="blog.html"
+            style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; border:none; z-index:10000;"></iframe>
 
         <script>
             // Open blog modal
@@ -1985,7 +1987,7 @@
                 const iframe = document.getElementById('blogIframe');
                 iframe.style.display = 'block';
                 // Wait for iframe to load, then trigger its openBlog function
-                iframe.onload = function() {
+                iframe.onload = function () {
                     iframe.contentWindow.openBlog();
                 };
                 // If already loaded, call directly
@@ -1995,11 +1997,46 @@
             }
 
             // Listen for close message from blog iframe
-            window.addEventListener('message', function(e) {
+            window.addEventListener('message', function (e) {
                 if (e.data === 'closeBlog') {
                     document.getElementById('blogIframe').style.display = 'none';
                 }
             });
+
+            function openCallModal() {
+                // If using iframe method
+                const iframe = document.createElement('iframe');
+                iframe.id = 'callModalIframe';
+                iframe.src = 'call-to-participants.html';
+                iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:9999;';
+                document.body.appendChild(iframe);
+
+                // Listen for close message from iframe
+                window.addEventListener('message', function (event) {
+                    if (event.data === 'closeCallModal') {
+                        const iframe = document.getElementById('callModalIframe');
+                        if (iframe) iframe.remove();
+                    }
+                });
+            }
+
+            function openOverviewModal() {
+                // Create iframe for overview modal
+                const iframe = document.createElement('iframe');
+                iframe.id = 'overviewModalIframe';
+                iframe.src = 'project-overview.html?v=' + Date.now();
+                iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:9999;';
+                document.body.appendChild(iframe);
+
+                // Listen for close message from iframe
+                window.addEventListener('message', function (event) {
+                    if (event.data === 'closeOverviewModal') {
+                        const iframe = document.getElementById('overviewModalIframe');
+                        if (iframe) iframe.remove();
+                    }
+                });
+            }
         </script>
-    </body>
+</body>
+
 </html>
