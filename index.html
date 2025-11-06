@@ -986,7 +986,8 @@
                 </div>
 
                 <div class="header_links">
-                    <a href="#" onclick="openOverviewModal(); return false;">项目简介 / Project Overview / Projekt-Überblick</a>
+                    <a href="#" onclick="openOverviewModal(); return false;">项目简介 / Project Overview /
+                        Projekt-Überblick</a>
                     <a href="#" onclick="openBlog(); return false;">博客 / Blog / Blog</a>
                     <a href="#" onclick="openCallModal(); return false;">参与者召唤 / Call to Participants / An die
                         Teilnehmenden</a>
@@ -1280,11 +1281,29 @@
                 }
             }
 
+            // Global variable for participant content
+            let participantContent = [];
+
+            // Function to get content for a specific participant
+            function getParticipantContent(participantId) {
+                return participantContent.find(p => p.id === participantId) || null;
+            }
+
             // Load participants from JSON file
             fetch('fairytale-data.json')
                 .then(response => response.json())
                 .then(data => {
                     participants = data;
+
+                    // Also load participant content
+                    return fetch('fairytale-content.json');
+                })
+                .then(response => response.json())
+                .then(data => {
+                    participantContent = data;
+                    console.log(`✅ Loaded content for ${participantContent.length} participants`);
+
+                    // Initialize everything
                     initZoom();
                     initDraggableNav();
                     setupModalHandlers();
@@ -1294,7 +1313,7 @@
                     renderParticipants();
                 })
                 .catch(error => {
-                    console.error('Error loading participant data:', error);
+                    console.error('Error loading data:', error);
                 });
 
             function renderParticipants() {
