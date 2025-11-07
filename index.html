@@ -1554,27 +1554,40 @@ const decade = startYear.substring(2); // Get last 2 digits like "80"
 document.getElementById('modalGeneration').textContent = generationDisplay;
             }
 
-            function filterParticipants() {
-                const genderFilter = document.getElementById('gender').value;
-                const regionFilter = document.getElementById('region').value;
-                const generationFilter = document.getElementById('generation').value;
-                const languageFilter = document.getElementById('language').value;
-                const themesFilter = document.getElementById('themes').value;
+function filterParticipants() {
+    const genderFilter = document.getElementById('gender').value;
+    const regionFilter = document.getElementById('region').value;
+    const generationFilter = document.getElementById('generation').value;
+    const languageFilter = document.getElementById('language').value;
+    const themesFilter = document.getElementById('themes').value;
 
-                // NEW: Check if any filter is active
-                const hasActiveFilters = genderFilter || regionFilter || generationFilter || languageFilter || themesFilter;
-                const grid = document.getElementById('participants');
+    // NEW: Check if any filter is active
+    const hasActiveFilters = genderFilter || regionFilter || generationFilter || languageFilter || themesFilter;
+    const grid = document.getElementById('participants');
 
-                // NEW: Add or remove 'filtered' class based on whether filters are active
-                if (hasActiveFilters) {
-                    grid.classList.add('filtered');
-                } else {
-                    grid.classList.remove('filtered');
-                }
+    // NEW: Add or remove 'filtered' class based on whether filters are active
+    if (hasActiveFilters) {
+        grid.classList.add('filtered');
+    } else {
+        grid.classList.remove('filtered');
+    }
 
-                const cards = document.querySelectorAll('.outer');
+    const cards = document.querySelectorAll('.outer');
+    
+    // If no filters are active, mark all as active
+    if (!hasActiveFilters) {
+        cards.forEach(card => {
+            card.classList.remove('inactive');
+            card.classList.add('active');
+        });
+        updateStats();
+        if (map && document.getElementById('map-container').style.display === 'block') {
+            updateMapMarkers();
+        }
+        return;
+    }
 
-                cards.forEach(card => {
+    cards.forEach(card => {
                     const gender = card.dataset.gender;
                     const region = card.dataset.region;
                     const generation = card.dataset.generation;
@@ -1609,12 +1622,12 @@ document.getElementById('modalGeneration').textContent = generationDisplay;
                 }
             }
 
-            function updateStats() {
-                const total = document.querySelectorAll('.outer').length;
-                const visible = document.querySelectorAll('.outer.active').length;
-                document.getElementById('totalCount').textContent = total;
-                document.getElementById('visibleCount').textContent = visible;
-            }
+function updateStats() {
+    const total = document.querySelectorAll('.outer').length;
+    const visible = document.querySelectorAll('.outer.active').length;
+    console.log(`Stats: ${visible} of ${total} participants visible`);
+    // Stats display can be added to HTML later if needed
+}
 
             function resetFilters() {
                 document.getElementById('gender').value = '';
@@ -1922,16 +1935,20 @@ document.getElementById('modalGeneration').textContent = generationDisplay;
                 'Macau': [22.1987, 113.5439]
             };
 
-            function showMapView() {
-                document.getElementById('participants').style.display = 'none';
-                document.getElementById('map-container').style.display = 'block';
+function showMapView() {
+    document.getElementById('participants').style.display = 'none';
+    document.getElementById('map-container').style.display = 'block';
 
-                if (!map) {
-                    initMap();
-                }
+    if (!map) {
+        initMap();
+    }
 
-                updateMapMarkers();
-            }
+    // Apply filters first to ensure correct active/inactive states
+    filterParticipants();
+    
+    // Then update map markers
+    updateMapMarkers();
+}
 
             function showGridView() {
                 document.getElementById('participants').style.display = 'block';
@@ -1949,18 +1966,21 @@ document.getElementById('modalGeneration').textContent = generationDisplay;
                 }).addTo(map);
             }
 
-            function updateMapMarkers() {
-                // Clear existing markers
-                markers.forEach(marker => map.removeLayer(marker));
-                markers = [];
+function updateMapMarkers() {
+    // Clear existing markers
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
 
-                // Configuration: scatter radius in degrees
-                const SCATTER_RADIUS = 0.3;
+    // Configuration: scatter radius in degrees
+    const SCATTER_RADIUS = 0.3;
 
-                // Get all active (visible) participants from the grid
-                const activeCards = document.querySelectorAll('.outer.active');
+    // Get all active (visible) participants from the grid
+    const activeCards = document.querySelectorAll('.outer.active');
+    
+    console.log('Active cards found:', activeCards.length);
+    console.log('Total participants:', participants.length);
 
-                activeCards.forEach(card => {
+    activeCards.forEach(card => {
                     const participantId = card.dataset.id;
                     const participant = participants.find(p => p.id === participantId);
 
