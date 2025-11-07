@@ -75,7 +75,7 @@ try {
                     $fullFileName = $fileName . '.' . $extension;
                     
                     // Create image tag - using blog-images folder for local copies
-                    $imgTag = '<img src="blog-images/' . htmlspecialchars($fullFileName) . '" alt="' . htmlspecialchars($imageTitle) . '" style="max-width: 100%; height: auto; margin: 15px 0;">';
+                    $imgTag = '<img src="../blog-images/' . htmlspecialchars($fullFileName) . '" alt="' . htmlspecialchars($imageTitle) . '" style="max-width: 100%; height: auto; margin: 15px 0;">';
                     
                     // Add caption if exists
                     if (!empty($caption)) {
