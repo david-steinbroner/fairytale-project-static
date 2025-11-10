@@ -938,7 +938,7 @@
 <body>
     <div id="container">
         <!-- Navigation Box -->
-        <div id="headercontainer">
+        <div id="headercontainer" role="complementary" aria-label="Navigation and filters">
             <div id="navbox">
                 <div id="header">
                     <h1>童话项目 / Fairytale Project / Fairytale-Projekt</h1>
@@ -946,16 +946,16 @@
 
                 <div id="view">
                     <h3>1. 选择视图 / Select View / Ansicht auswählen:<br /></h3>
-                    <select id="viewSelect" class="filter">
+                    <select id="viewSelect" class="filter" aria-label="Select view type: grid or map">
                         <option value="grid">肖像 / Grid / Raster</option>
                         <option value="map">地图 / Map / Karte</option>
                     </select>
                 </div>
 
-                <div id="filters">
+                <div id="filters" role="search" aria-label="Filter participants">
                     <h3>2. 选择过滤器 / Select Filters / Filter auswählen:<br /></h3>
 
-                    <select id="language" class="filter">
+                    <select id="language" class="filter" aria-label="Filter by language">
                         <option value="">语言 / Languages / Sprachen</option>
                         <option value="Chinese">中文</option>
                         <option value="Chinese,English">中文 + English</option>
@@ -963,76 +963,76 @@
                         <option value="Chinese,English,German">中文 + English + Deutsch</option>
                     </select>
 
-                    <select id="gender" class="filter">
+                    <select id="gender" class="filter" aria-label="Filter by gender">
                         <option value="">性别 / Gender / Geschlecht</option>
                         <option value="Male">男 / Male / Männlich</option>
                         <option value="Female">女 / Female / Weiblich</option>
                     </select>
 
-                    <select id="region" class="filter">
+                    <select id="region" class="filter" aria-label="Filter by region">
                         <option value="">地区 / Region / Region</option>
                     </select>
 
-                    <select id="generation" class="filter">
+                    <select id="generation" class="filter" aria-label="Filter by generation">
                         <option value="">出生年代 / Generation / Generation</option>
                     </select>
 
-                    <select id="themes" class="filter">
+                    <select id="themes" class="filter" aria-label="Filter by themes">
                         <option value="">主题 / Themes / Themen</option>
                     </select>
 
-                    <p><a href="#" id="resetFilters">重设过滤器 / Reset Filters / Filter zurücksetzen</a></p>
+                    <p><a href="#" id="resetFilters" aria-label="Reset all filters">重设过滤器 / Reset Filters / Filter zurücksetzen</a></p>
                 </div>
 
                 <div class="header_links">
-                    <a href="#" onclick="openOverviewModal(); return false;">项目简介 / Project Overview /
+                    <a href="#" onclick="openOverviewModal(); return false;" aria-label="Open project overview">项目简介 / Project Overview /
                         Projekt-Überblick</a>
-                    <a href="#" onclick="openBlog(); return false;">博客 / Blog / Blog</a>
-                    <a href="#" onclick="openCallModal(); return false;">参与者召唤 / Call to Participants / An die
+                    <a href="#" onclick="openBlog(); return false;" aria-label="Open blog">博客 / Blog / Blog</a>
+                    <a href="#" onclick="openCallModal(); return false;" aria-label="Open call to participants">参与者召唤 / Call to Participants / An die
                         Teilnehmenden</a>
-                    <div id="social">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net"
-                            target="_blank" class="facebook">Facebook</a>
-                        <a href="http://clicktotweet.com/0RVj3" target="_blank" class="twitter">Twitter</a>
-                        <a href="https://plusone.google.com/_/+1/confirm?hl=en&url=http://www.fairytaleproject.net"
-                            target="_blank" class="googleplus">Google Plus</a>
-                        <a href="https://www.tumblr.com/share/link?url=http://www.fairytaleproject.net&name=The%20Fairytale%20Project"
-                            target="_blank" class="tumblr">Tumblr</a>
-                        <a href="http://share.renren.com/share/buttonshare.do?link=http://www.fairytaleproject.net&title=The%20Fairytale%20Project"
-                            target="_blank" class="renren">RenRen</a>
-                        <a href="http://service.weibo.com/share/share.php?url=http://www.fairytaleproject.net&appkey=&title=The%20Fairytale%20Project&pic=&ralateUid=&language=zh_cn"
-                            class="weibo" target="_blank">Weibo</a>
+                    <div id="social" role="navigation" aria-label="Share on social media">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.fairytaleproject.net"
+                            target="_blank" class="facebook" aria-label="Share on Facebook">Facebook</a>
+                        <a href="https://clicktotweet.com/0RVj3" target="_blank" class="twitter" aria-label="Share on Twitter">Twitter</a>
+                        <a href="https://plusone.google.com/_/+1/confirm?hl=en&url=https://www.fairytaleproject.net"
+                            target="_blank" class="googleplus" aria-label="Share on Google Plus">Google Plus</a>
+                        <a href="https://www.tumblr.com/share/link?url=https://www.fairytaleproject.net&name=The%20Fairytale%20Project"
+                            target="_blank" class="tumblr" aria-label="Share on Tumblr">Tumblr</a>
+                        <a href="https://share.renren.com/share/buttonshare.do?link=https://www.fairytaleproject.net&title=The%20Fairytale%20Project"
+                            target="_blank" class="renren" aria-label="Share on RenRen">RenRen</a>
+                        <a href="https://service.weibo.com/share/share.php?url=https://www.fairytaleproject.net&appkey=&title=The%20Fairytale%20Project&pic=&ralateUid=&language=zh_cn"
+                            class="weibo" target="_blank" aria-label="Share on Weibo">Weibo</a>
                     </div>
                 </div>
                 <!-- Zoom Controls -->
-                <div id="zoom-controls">
-                    <button id="zoom-in" class="zoom-btn" title="Zoom In">&#43;</button>
-                    <button id="zoom-out" class="zoom-btn" title="Zoom Out">&#8722;</button>
+                <div id="zoom-controls" role="group" aria-label="Zoom controls">
+                    <button id="zoom-in" class="zoom-btn" title="Zoom In" aria-label="Zoom in to see larger participant photos">&#43;</button>
+                    <button id="zoom-out" class="zoom-btn" title="Zoom Out" aria-label="Zoom out to see more participants">&#8722;</button>
                 </div>
             </div>
         </div>
 
         <!-- Participant Grid -->
-        <div id="participants" class="zoom-level-5"></div>
+        <div id="participants" class="zoom-level-5" role="main" aria-label="Participant portraits grid"></div>
 
         <!-- Map View -->
-        <div id="map-container" style="display: none;">
-            <div id="map"></div>
+        <div id="map-container" style="display: none;" role="region" aria-label="Map view of participant locations">
+            <div id="map" role="application" aria-label="Interactive map showing participant locations in China"></div>
         </div>
 
         <!-- Stats Bar -->
-        <div class="stats">
-            <a href="#" id="supportLink"><strong>支持童话计划 / Support Fairytale Project / Unterstützen Sie das
+        <div class="stats" role="contentinfo">
+            <a href="#" id="supportLink" aria-label="Support the Fairytale Project"><strong>支持童话计划 / Support Fairytale Project / Unterstützen Sie das
                     Fairytale-Projekt</strong></a>
             <span class="stats-text">. An initiative of <a href="http://slought.org"
-                    target="_blank"><strong>Slought</strong></a>. Courtesy of Ai Weiwei; Leister Foundation,
+                    target="_blank" aria-label="Visit Slought website"><strong>Slought</strong></a>. Courtesy of Ai Weiwei; Leister Foundation,
                 Switzerland; Erlenmeyer Stiftung, Switzerland; and Galerie Urs Meile, Beijing-Lucerne.</span>
         </div>
 
         <!-- Participant Detail Modal -->
-        <div id="participantModal" class="modal">
+        <div id="participantModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalId">
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="close" role="button" aria-label="Close participant details">&times;</span>
                 <div class="modal-body">
 
                     <!-- Left Column: Photo and Dropdowns -->
@@ -1057,14 +1057,14 @@
                         <!-- 2. DROPDOWNS -->
                         <div class="modal-selectors">
                             <h3>1. 选择语言 / Select language / Sprach auswählen:</h3>
-                            <select id="modalLanguage" class="modal-select">
+                            <select id="modalLanguage" class="modal-select" aria-label="Select language for participant information">
                                 <option value="chinese">中文</option>
                                 <option value="english">English</option>
                                 <option value="german">Deutsch</option>
                             </select>
 
                             <h3>2. 选择内容 / Select content / Inhalt auswählen:</h3>
-                            <select id="modalContent" class="modal-select">
+                            <select id="modalContent" class="modal-select" aria-label="Select content type to view">
                                 <option value="biography">简介 / Biography / Biografie</option>
                                 <option value="application">申请问卷 / Application / Application</option>
                                 <option value="interview">访谈 / Interview / Gespräch</option>
@@ -1073,7 +1073,7 @@
                         </div>
 
                         <!-- 3. GALLERY (thumbnails at bottom) -->
-                        <div id="photoGallery" class="photo-gallery">
+                        <div id="photoGallery" class="photo-gallery" role="list" aria-label="Participant photo gallery">
                             <!-- Thumbnails inserted by JavaScript -->
                         </div>
                     </div>
@@ -1081,11 +1081,11 @@
                     <!-- Right Column: Metadata and Content -->
                     <div class="modal-right">
 
-                        <div id="photoOverlay" class="photo-overlay" style="display: none;">
-                            <img id="overlayPhoto" src="" alt="" class="overlay-photo">
+                        <div id="photoOverlay" class="photo-overlay" style="display: none;" role="dialog" aria-modal="true" aria-label="Enlarged photo view">
+                            <img id="overlayPhoto" src="" alt="Enlarged participant photo" class="overlay-photo">
                         </div>
 
-                        <div class="modal-metadata">
+                        <div class="modal-metadata" role="region" aria-label="Participant information">
                             <p>
                                 <strong class="label-gender">性别 / Gender / Geschlecht:</strong> <span
                                     id="modalGender"></span><br>
@@ -1096,7 +1096,7 @@
                             </p>
                         </div>
 
-                        <div class="modal-content-area">
+                        <div class="modal-content-area" role="region" aria-live="polite" aria-label="Participant content">
                             <h2 id="modalContentTitle" class="modal-content-title">Biography</h2>
                             <p class="modal-placeholder">Content not yet available. Biographies and interview materials
                                 are
@@ -1334,18 +1334,21 @@
                         themesString = trilingualThemes.join('|||'); // Use ||| as separator to avoid conflicts with /
                     }
 
-                    return `<div class="outer active" 
-            data-id="${p.id}" 
-            data-gender="${p.gender}" 
-            data-generation="${p.generation}" 
-            data-region="${p.region.zh} / ${p.region.en} / ${p.region.de}" 
-            data-language="${p.language.join(',')}" 
-            data-themes="${themesString}">
+                    return `<div class="outer active"
+            data-id="${p.id}"
+            data-gender="${p.gender}"
+            data-generation="${p.generation}"
+            data-region="${p.region.zh} / ${p.region.en} / ${p.region.de}"
+            data-language="${p.language.join(',')}"
+            data-themes="${themesString}"
+            role="button"
+            tabindex="0"
+            aria-label="View details for participant ${p.id}">
             ${p.photos[0] ?
-                            `<img src="images/${p.photos[0]}" alt="Participant ${p.id}" class="participant-photo">` :
-                            `<div class="no-photo">${p.id}</div>`
+                            `<img src="images/${p.photos[0]}" alt="Portrait of participant ${p.id}" class="participant-photo">` :
+                            `<div class="no-photo" role="img" aria-label="No photo available for participant ${p.id}">${p.id}</div>`
                         }
-            <p class="id">${p.id}</p>
+            <p class="id" aria-hidden="true">${p.id}</p>
         </div>`;
                 }).join('');
 
@@ -1366,12 +1369,15 @@
 
                 if (participant.photos && participant.photos.length > 0) {
                     photoElement.src = `images/${participant.photos[0]}`;
-                    photoElement.alt = `Participant ${participant.id}`;
+                    photoElement.alt = `Portrait photo of participant ${participant.id}`;
                     photoElement.style.display = 'block';
+                    photoElement.setAttribute('role', 'button');
+                    photoElement.setAttribute('aria-label', `Click to view enlarged photo of participant ${participant.id}`);
 
                     // Make main photo clickable to show large version
                     photoElement.onclick = function () {
                         overlayPhoto.src = photoElement.src;
+                        overlayPhoto.alt = `Enlarged portrait of participant ${participant.id}`;
                         photoOverlay.style.display = 'flex';
                     };
 
@@ -1384,8 +1390,10 @@
                         participant.photos.forEach((photo, index) => {
                             const thumb = document.createElement('img');
                             thumb.src = `images/${photo}`;
-                            thumb.alt = `Photo ${index + 1}`;
+                            thumb.alt = `Photo ${index + 1} of participant ${participant.id}`;
                             thumb.className = 'photo-thumbnail' + (index === 0 ? ' active' : '');
+                            thumb.setAttribute('role', 'button');
+                            thumb.setAttribute('aria-label', `View photo ${index + 1} of ${participant.photos.length}`);
                             thumb.onclick = function () {
                                 // Update active thumbnail
                                 gallery.querySelectorAll('.photo-thumbnail').forEach(t => t.classList.remove('active'));
@@ -1393,6 +1401,7 @@
 
                                 // Show large photo on right side
                                 overlayPhoto.src = `images/${photo}`;
+                                overlayPhoto.alt = `Photo ${index + 1} of participant ${participant.id}`;
                                 photoOverlay.style.display = 'flex';
                             };
                             gallery.appendChild(thumb);
