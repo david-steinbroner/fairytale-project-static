@@ -943,6 +943,52 @@
                 flex-direction: column;
             }
         }
+
+        /* ========================================
+           MOBILE WARNING MESSAGE
+           ======================================== */
+        #mobile-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f5;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .mobile-content {
+            text-align: center;
+            max-width: 500px;
+            padding: 40px 20px;
+        }
+
+        .mobile-content h1 {
+            color: #d32f2f;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .mobile-content h2 {
+            color: #d32f2f;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .mobile-content p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
     </style>
 
     <!-- Leaflet CSS -->
@@ -961,6 +1007,23 @@
 </head>
 
 <body>
+    <!-- Mobile Warning Message -->
+    <div id="mobile-message" style="display: none;">
+        <div class="mobile-content">
+            <h1>童话项目</h1>
+            <h2>Fairytale Project</h2>
+            <h2>Fairytale-Projekt</h2>
+
+            <p>您好，我们的网站暂时不适合在移动设备上浏览。谢谢，童话项目。</p>
+
+            <p>Hi, our archive is not suitable for viewing on a mobile device at this time. Thanks, Fairytale Project.</p>
+
+            <p>Hallo, unser Archiv kann momentan leider nicht auf einem Mobiltelefon angesehen werden. Vielen Dank, das Fairytale-Projekt.</p>
+        </div>
+    </div>
+
+    <!-- Desktop Site -->
+    <div id="desktop-site">
     <div id="container">
         <!-- Navigation Box -->
         <div id="headercontainer" role="complementary" aria-label="Navigation and filters">
@@ -1142,6 +1205,25 @@
         </div>
 
         <script>
+            // ==========================================
+            // MOBILE DETECTION
+            // ==========================================
+            const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent)
+                             || window.innerWidth <= 768;
+
+            // Show/hide content based on device
+            window.addEventListener('DOMContentLoaded', function() {
+                const mobileMessage = document.getElementById('mobile-message');
+                const desktopSite = document.getElementById('desktop-site');
+
+                if (isMobile) {
+                    mobileMessage.style.display = 'flex';
+                    desktopSite.style.display = 'none';
+                    // Don't load participant data on mobile
+                    return;
+                }
+            });
+
             let participants = [];
 
             // ==========================================
@@ -2268,6 +2350,8 @@ function updateMapMarkers() {
                 });
             }
         </script>
+    </div>
+    <!-- End Desktop Site -->
 </body>
 
 </html>
