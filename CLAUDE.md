@@ -10,7 +10,7 @@ Standards: inherits ../engineering-standards.md. Overrides & project-specifics b
 - test / check: —
 
 ## Commit protocol
-Ask before committing (see ../CLAUDE.md). Note: `fairytale-deploy.zip` is a ~1.3GB artifact and the `images/` dir holds ~4,900 files — keep large media/zip out of commits.
+Note: `fairytale-deploy.zip` is a ~1.3GB artifact and the `images/` dir holds ~4,900 files — keep large media/zip out of commits.
 
 ## Version tag
 Source: none  •  Shown in UI: nowhere — none yet — add a version constant + visible tag per ../CLAUDE.md when it gains a build/UI
